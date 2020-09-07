@@ -6,6 +6,7 @@ Intends to give new sprites to a few enemies that don't have them, while also ke
 **Currently adds new sprites to the following enemies:**
 *  SMG Zombies **(POS2)**
 *  Helmetted Jackboots **(SPO2)**
+*  Slayer Jackboots **(SPO3)**
 *  Mage Imps **(TRO2)**
 *  Healer Imps  **(TRO3)**
   
