@@ -1,4 +1,5 @@
 -SMG Zombie sprites by Skelegant, with edits by HorrorMovieGuy
+-SSG Shotgunner sprites edited by Melodica from sprites by Aerial, id Software, Paradox_tn, rhoq, Skulltag Team
 -Bloody Marine sprites edited by Melodica
 -Mage Imp sprites from Realm667, by Vader and edited by ItsNatureToDie
 -Healer Imp sprites from Realm667, by Vader and edited by ItsNatureToDie
