@@ -60,6 +60,21 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 		else if(accuracy==1)wep=0;
 		else if(accuracy==2)wep=1;
 		else if(accuracy==3)wep=-1;
+		
+		if(wep==1)
+		{
+			seesound="shotguy/slayer/sight";
+			painsound="shotguy/slayer/pain";
+			deathsound="shotguy/slayer/death";
+			activesound="shotguy/slayer/active";
+		}
+		else if(wep==-1)
+		{
+			seesound="shotguy/helmet/sight";
+			painsound="shotguy/helmet/pain";
+			deathsound="shotguy/helmet/death";
+			activesound="shotguy/helmet/active";
+		}
 
 		//if no ssg, sg
 		if(Wads.CheckNumForName("SHT2B0",wads.ns_sprites,-1,false)<0&&wep==1)wep=0;
@@ -73,8 +88,8 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 			gunloaded=random(10,50);
 			givearmour(1.,0.06,-0.4);
 		}else{
-			if(wep=0)sprite=GetSpriteIndex("SPOSA1");
-			if(wep=1)sprite=GetSpriteIndex("SPO3A1");
+			if(wep==0)sprite=GetSpriteIndex("SPOSA1");
+			if(wep==1)sprite=GetSpriteIndex("SPO3A1");
 			A_SetTranslation("ShotgunGuy");
 			gunloaded=wep?random(1,2):random(3,8);
 			if(random(0,7))choke=(wep?(7+8*7):1);else{

@@ -492,6 +492,11 @@ class Regentipede:Serpentipede{
 		health 120;
 		gibhealth 140;
 		translation "LightImp";
+		seesound "imp/healer/sight";
+		painsound "imp/healer/pain";
+		deathsound "imp/healer/death";
+		activesound "imp/healer/active";
+		meleesound "imp/healer/melee";
 		seesound "";
 		activesound "";
 		meleedamage 3;
@@ -574,6 +579,11 @@ class Ardentipede:Serpentipede{
 
 		-missilemore
 		translation "MageImp";
+		seesound "imp/mage/sight";
+		painsound "imp/mage/pain";
+		deathsound "imp/mage/death";
+		activesound "imp/mage/active";
+		meleesound "imp/mage/melee";
 		speed 8;
 		health 110;
 		obituary "%o experienced the magic.";

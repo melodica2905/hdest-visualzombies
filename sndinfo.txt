@@ -1,0 +1,26 @@
+$alias grunt/smg/sight grunt/sight
+$alias grunt/smg/pain grunt/pain
+$alias grunt/smg/death grunt/death
+$alias grunt/smg/active grunt/active
+
+$alias shotguy/helmet/sight shotguy/sight
+$alias shotguy/helmet/pain shotguy/pain
+$alias shotguy/helmet/death shotguy/death
+$alias shotguy/helmet/active shotguy/active
+
+$alias shotguy/slayer/sight shotguy/sight
+$alias shotguy/slayer/pain shotguy/pain
+$alias shotguy/slayer/death shotguy/death
+$alias shotguy/slayer/active shotguy/active
+
+$alias imp/healer/sight imp/sight
+$alias imp/healer/pain imp/pain
+$alias imp/healer/death imp/death
+$alias imp/healer/active imp/active
+$alias imp/healer/melee imp/melee
+
+$alias imp/mage/sight imp/sight
+$alias imp/mage/pain imp/pain
+$alias imp/mage/death imp/death
+$alias imp/mage/active imp/active
+$alias imp/mage/melee imp/melee

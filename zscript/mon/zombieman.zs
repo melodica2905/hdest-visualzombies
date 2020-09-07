@@ -94,8 +94,8 @@ class ZombieStormtrooper:HDMobMan{
 	int mag;
 	int firemode; //-2 SMG; -1 semi only; 0 semi; 1 auto; 2+ burst
 	bool jammed;
-	override void postbeginplay(){
-		super.postbeginplay();
+	override void beginplay(){
+		super.beginplay();
 		if(user_weapon)accuracy=user_weapon;
 		if(accuracy==1)firemode=random(0,5);
 		else if(accuracy==2)firemode=-1;
@@ -103,6 +103,10 @@ class ZombieStormtrooper:HDMobMan{
 		else firemode=random(-2,4);
 		if(firemode==-2){
 			mag=random(1,30);
+			seesound="grunt/smg/sight";
+			painsound="grunt/smg/pain";
+			deathsound="grunt/smg/death";
+			activesound="grunt/smg/active";
 			//A_SetTranslation("ZombieSMG");
 			//sprite = GetSpriteIndex('POS2');
 		}else{
@@ -110,6 +114,10 @@ class ZombieStormtrooper:HDMobMan{
 			if(firemode>2)firemode=1;
 			maxtargetrange=6000;
 		}
+	}
+
+	override void postbeginplay(){
+		super.postbeginplay();
 		hdmobster.spawnmobster(self);
 	}
 	void A_ZomFrag(){
