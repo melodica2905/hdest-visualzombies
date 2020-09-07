@@ -73,7 +73,8 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 			gunloaded=random(10,50);
 			givearmour(1.,0.06,-0.4);
 		}else{
-			sprite=GetSpriteIndex("SPOSA1");
+			if(wep=0)sprite=GetSpriteIndex("SPOSA1");
+			if(wep=1)sprite=GetSpriteIndex("SPO3A1");
 			A_SetTranslation("ShotgunGuy");
 			gunloaded=wep?random(1,2):random(3,8);
 			if(random(0,7))choke=(wep?(7+8*7):1);else{
@@ -156,6 +157,9 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 		}
 	}
 	states{
+	precache:
+		SPO3 A 0;
+		stop;
 	spawn:
 		SPOS A 0 nodelay A_JumpIf(wep>=0,"spawn2");
 		SPO2 A 0;
