@@ -631,13 +631,13 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 		#### L 4 spawn("MegaBloodSplatter",pos+(0,0,34),ALLOW_REPLACE);
 		#### LK 6;
 		#### JIH 4;
-		---- A 0 setstatelabel("see");
+		#### A 0 A_Jump(256,"see");
 	ungib:
 		#### U 12;
 		#### T 8;
 		#### SRQ 6;
 		#### PON 4;
-		goto checkraise;
+		#### A 0 A_Jump(256,"see");
 	}
 }
 

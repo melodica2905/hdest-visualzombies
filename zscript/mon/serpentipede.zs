@@ -367,13 +367,13 @@ class Serpentipede:HDMobBase{
 		#### M 4;
 		#### ML 6;
 		#### KJI 4;
-		goto checkraise;
+		#### A 0 A_Jump(256,"see");
 	ungib:
 		#### U 6;
 		#### UT 8;
 		#### SRQ 6;
 		#### PONH 4;
-		goto checkraise;
+		#### A 0 A_Jump(256,"see");
 	falldown:
 		#### H 5;
 		#### I 5 A_Scream();

@@ -519,13 +519,13 @@ class ZombieStormtrooper:HDMobMan{
 		}
 		#### LK 6;
 		#### JIH 4;
-		goto checkraise;
+		#### A 0 A_Jump(256,"see");
 	ungib:
 		#### U 12;
 		#### T 8;
 		#### SRQ 6;
 		#### PONM 4;
-		goto checkraise;
+		#### A 0 A_Jump(256,"see");
 	}
 }
 
