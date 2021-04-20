@@ -246,10 +246,6 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 		#### A 0 A_Chase("melee","turnaround",CHF_DONTMOVE);
 		#### DD 3{hdmobai.chase(self);}
 		#### A 0 A_Jump(200,"Roam");
-		#### A 0{
-			A_StartSound(seesound,CHAN_VOICE);
-			A_AlertMonsters();
-		}
 		#### A 0 A_JumpIfTargetInLOS("see");
 		loop;
 	turnaround:
@@ -566,11 +562,9 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 		---- A 0 setstatelabel("see");
 	pain:
 		#### G 3 A_Jump(12,1);
-		#### G 3{
-			A_Pain();
-			if(!random(0,7))A_AlertMonsters();
-		}
+		#### G 3 A_Pain();
 		#### G 0{
+			A_ShoutAlert(0.2,SAF_SILENT);
 			if(target&&distance3d(target)<100)setstatelabel("see");
 			bfrightened=true;
 		}

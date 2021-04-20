@@ -145,6 +145,8 @@ class Serpentipede:HDMobBase{
 		//$Category "Monsters/Hideous Destructor"
 		//$Title "Imp Fighter"
 		//$Sprite "TROOA1"
+		
+		+hdmobbase.chasealert
 
 		mass 100;
 		+floorclip
@@ -225,8 +227,6 @@ class Serpentipede:HDMobBase{
 		loop;
 	see:
 		#### ABCD 4 A_ImpChase();
-		#### A 0 A_Jump(180,"see");
-		#### A 0 A_AlertMonsters();
 		loop;
 	missile:
 		#### ABCD 4{
@@ -329,8 +329,7 @@ class Serpentipede:HDMobBase{
 		#### A 0 A_GiveInventory("HDFireEnder",3);
 		#### H 3 {bNODROPOFF=true;}
 		#### H 3 A_Pain();
-		#### A 0 A_Jump(180,2);
-		#### A 0 A_AlertMonsters();
+		#### A 0 A_ShoutAlert(0.4,SAF_SILENT);
 		#### A 2 A_FaceTarget();
 		#### BCD 2 A_FastChase();
 		goto missile;

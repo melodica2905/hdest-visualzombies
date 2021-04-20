@@ -12,6 +12,7 @@ class HDMobMan:HDMobBase{
 		speed 10;
 		+hdmobbase.smallhead
 		+hdmobbase.biped
+		+hdmobbase.chasealert
 		hdmobbase.downedframe 11;
 		tag "zombie";
 	}
@@ -442,7 +443,6 @@ class ZombieStormtrooper:HDMobMan{
 		#### BC 5{hdmobai.wander(self,true);}
 		#### D 5{hdmobai.chase(self);}
 		#### A 0 A_Jump(140,"Roam");
-		#### A 0 A_AlertMonsters();
 		#### A 0 A_JumpIfTargetInLOS("see");
 		loop;
 	turnaround:
@@ -478,11 +478,9 @@ class ZombieStormtrooper:HDMobMan{
 		---- A 0 setstatelabel("see");
 	pain:
 		#### G 2;
-		#### G 3{
-			A_Pain();
-			if(!random(0,10))A_AlertMonsters();
-		}
+		#### G 3 A_Pain();
 		#### G 0{
+			A_ShoutAlert(0.1,SAF_SILENT);
 			if(target&&distance3d(target)<100)setstatelabel("see");
 			else bfrightened=true;
 		}
