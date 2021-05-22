@@ -181,6 +181,7 @@ class Serpentipede:HDMobBase{
 			A_SetSize(13,54);
 		}
 		resize(0.8,1.1);
+		voicepitch=frandom(0.9,1.1);
 	}
 	override string GetObituary(actor victim,actor inflictor,name mod,bool playerattack){
 		string ob;
@@ -208,7 +209,7 @@ class Serpentipede:HDMobBase{
 	spawn2:
 		#### ABCD 4{
 			A_Wander();
-			A_Look();
+			A_HDLook();
 		}
 		#### A 0 A_Jump(198,"spawn2");
 		#### A 0 A_Recoil(-0.4);
@@ -217,11 +218,11 @@ class Serpentipede:HDMobBase{
 	spawn:
 		TROO A 0 nodelay A_SetImpSprite();
 	spawn0:
-		#### AAABBCCCDD 8 A_Look();
+		#### AAABBCCCDD 8 A_HDLook();
 		#### A 0 A_SetAngle(angle+random(-4,4));
 		#### A 1 A_SetTics(random(1,3));
 		#### A 0 A_Jump(216,2);
-		#### A 0 A_StartSound(activesound,CHAN_VOICE);
+		#### A 0 A_Vocalize(activesound);
 		#### A 0 A_JumpIf(bambush,"spawn0");
 		#### A 0 A_Jump(32,"spawn2");
 		loop;
@@ -309,7 +310,7 @@ class Serpentipede:HDMobBase{
 		#### A 0 A_Jump(256,2);
 		#### A 0 A_FaceTarget(40,80);
 		#### E 2;
-		#### E 0 A_StartSound(seesound,CHAN_VOICE);
+		#### E 0 A_Vocalize(seesound);
 		#### EEEEE 2 A_SpawnItemEx("ReverseImpBallTail",4,24,random(31,33),1,0,0,0,160);
 		#### E 2;
 		#### F 2;
@@ -328,14 +329,14 @@ class Serpentipede:HDMobBase{
 	pain:
 		#### A 0 A_GiveInventory("HDFireEnder",3);
 		#### H 3 {bNODROPOFF=true;}
-		#### H 3 A_Pain();
+		#### H 3 A_Vocalize(painsound);
 		#### A 0 A_ShoutAlert(0.4,SAF_SILENT);
 		#### A 2 A_FaceTarget();
 		#### BCD 2 A_FastChase();
 		goto missile;
 	death:
 		#### I 6 A_Gravity();
-		#### J 6 A_Scream();
+		#### J 6 A_Vocalize(deathsound);
 		#### KL 5;
 	dead:
 	death.spawndead:
@@ -383,7 +384,7 @@ class Serpentipede:HDMobBase{
 	standup:
 		#### LK 5;
 		#### J 0 A_Jump(64,2);
-		#### J 0 A_StartSound(seesound,CHAN_VOICE);
+		#### J 0 A_Vocalize(seesound);
 		#### JI 4 A_Recoil(-0.3);
 		#### HE 5;
 		#### A 0 A_Jump(256,"see");
@@ -530,7 +531,7 @@ class Regentipede:Serpentipede{
 		#### A 0 setstatelabel("see");
 	missile2:
 		#### E 2 A_FaceTarget(0,0);
-		#### E 0 A_StartSound(seesound,CHAN_VOICE);
+		#### E 0 A_Vocalize(seesound);
 		#### EEEEE 2 A_SpawnItemEx("ReverseImpBallTail",3,19,random(24,30),1,0,0,0,160);
 		#### A 0 A_JumpIfTargetInLOS(2);
 		#### A 0 A_Jump(256,2);
@@ -547,7 +548,7 @@ class Regentipede:Serpentipede{
 	pain:
 		#### A 0 A_GiveInventory("HDFireEnder",5);
 		#### H 3;
-		#### H 3 A_Pain();
+		#### H 3 A_Vocalize(painsound);
 		#### A 0 setstatelabel("see");
 	heal:
 		#### AHAHAHAHAHA 4 light("HEAL");
@@ -637,7 +638,7 @@ class Ardentipede:Serpentipede{
 		#### E 0 A_Jump(96,"Missile1");
 		#### E 0 A_Jump(16,"Missile3");
 		#### E 2 A_FaceTarget(0,0);
-		#### E 2 A_StartSound(seesound,CHAN_VOICE);
+		#### E 2 A_Vocalize(seesound);
 		#### EEEEEEE 2 A_SpawnItemEx("ReverseImpBallTail",random(3,5),random(23,25),random(31,33),1,0,0,0,160);
 		#### A 0 A_JumpIfTargetInLOS(2);
 		#### A 0 A_Jump(256,2);
@@ -678,7 +679,7 @@ class Ardentipede:Serpentipede{
 		#### A 0 A_GiveInventory("HDFireEnder",3);
 		#### H 0 A_Gravity();
 		#### H 3 {bNODROPOFF=true;}
-		#### H 3 A_Pain();
+		#### H 3 A_Vocalize(painsound);
 		#### A 2 A_FaceTarget();
 		#### BCD 2 A_FastChase();
 		Goto Missile;

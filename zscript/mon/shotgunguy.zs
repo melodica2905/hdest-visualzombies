@@ -180,7 +180,7 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 		SPO2 A 0;
 	spawn2:
 		#### EEEEEE 1{
-			A_Look();
+			A_HDLook();
 			A_Recoil(frandom(-0.1,0.1));
 			A_SetTics(random(1,10));
 		}
@@ -200,24 +200,24 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 			A_Recoil(frandom(-0.4,0.4));
 			A_SetTics(random(30,80));
 		}
-		#### A 0 A_StartSound(activesound,CHAN_VOICE);
+		#### A 0 A_Vocalize(activesound);
 		---- A 0 setstatelabel("spawn2");
 	spawnstill:
 		#### C 0{
-			A_Look();
+			A_HDLook();
 			A_Recoil(random(-1,1)*0.4);
 		}
 		#### CD 5{angle+=random(-4,4);}
 		#### A 0{
-			A_Look();
-			if(!random(0,15))A_StartSound(activesound,CHAN_VOICE);
+			A_HDLook();
+			if(!random(0,15))A_Vocalize(activesound);
 		}
 		#### AB 5{angle+=random(-4,4);}
 		#### B 1 A_SetTics(random(10,40));
 		---- A 0 setstatelabel("spawn2");
 	spawnwander:
 		#### CD 5{hdmobai.wander(self,false);}
-		#### A 0{if(!random(0,15))A_StartSound(activesound,CHAN_VOICE);}
+		#### A 0{if(!random(0,15))A_Vocalize(activesound);}
 		#### AB 5{hdmobai.wander(self,false);}
 		#### A 0 A_Jump(64,"spawn2");
 		loop;
@@ -438,7 +438,7 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 	jammed:
 		#### E 8;
 		#### E 0 A_Jump(128,"see");
-		#### E 4 A_StartSound(random(0,2)?seesound:painsound,CHAN_VOICE);
+		#### E 4 A_Vocalize(random(0,2)?seesound:painsound);
 		---- A 0 setstatelabel("see");
 
 	ohforfuckssake:
@@ -562,7 +562,7 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 		---- A 0 setstatelabel("see");
 	pain:
 		#### G 3 A_Jump(12,1);
-		#### G 3 A_Pain();
+		#### G 3 A_Vocalize(painsound);
 		#### G 0{
 			A_ShoutAlert(0.2,SAF_SILENT);
 			if(target&&distance3d(target)<100)setstatelabel("see");
@@ -574,7 +574,7 @@ class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
 
 	death:
 		#### H 5;
-		#### I 5 A_Scream();
+		#### I 5 A_Vocalize(deathsound);
 		#### JK 5;
 	dead:
 		#### K 3 canraise{if(abs(vel.z)<2.)frame++;}

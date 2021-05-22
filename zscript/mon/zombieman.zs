@@ -16,6 +16,11 @@ class HDMobMan:HDMobBase{
 		hdmobbase.downedframe 11;
 		tag "zombie";
 	}
+	override void postbeginplay(){
+		super.postbeginplay();
+		resize(0.95,1.05);
+		voicepitch=frandom(0.9,1.2);
+	}
 	//give armour
 	hdarmourworn givearmour(double chance=1.,double megachance=0.,double minimum=0.){
 		a_takeinventory("hdarmourworn");
@@ -32,7 +37,7 @@ class HDMobMan:HDMobBase{
 	states{
 	falldown:
 		#### H 5;
-		#### I 5 A_Scream();
+		#### I 5 A_Vocalize(deathsound);
 		#### JJKKK 2 A_SetSize(-1,max(deathheight,height-10));
 		#### L 0 A_SetSize(-1,deathheight);
 		#### L 10 A_KnockedDown();
@@ -40,7 +45,7 @@ class HDMobMan:HDMobBase{
 	standup:
 		#### K 6;
 		#### J 0 A_Jump(160,2);
-		#### J 0 A_StartSound(seesound,CHAN_VOICE);
+		#### J 0 A_Vocalize(seesound);
 		#### JI 4 A_Recoil(-0.3);
 		#### HE 6;
 		#### A 0 A_Jump(256,"see");
@@ -202,12 +207,12 @@ class ZombieStormtrooper:HDMobMan{
 		POSS A 0 nodelay A_CheckFreedoomSprite();
 	spawn2:
 		#### A 0{
-			A_Look();
+			A_HDLook();
 			A_Recoil(frandom(-0.1,0.1));
 		}
 		#### EEE 1{
 			A_SetTics(random(5,17));
-			A_Look();
+			A_HDLook();
 		}
 		#### E 1{
 			A_Recoil(frandom(-0.1,0.1));
@@ -221,19 +226,19 @@ class ZombieStormtrooper:HDMobMan{
 		#### G 1{
 			A_Recoil(frandom(-0.4,0.4));
 			A_SetTics(random(30,80));
-			if(!random(0,7))A_StartSound(activesound,CHAN_VOICE);
+			if(!random(0,7))A_Vocalize(activesound);
 		}
 		#### A 0 A_Jump(256,"spawn2");
 	spawnswitch:
 		#### A 0 A_JumpIf(bambush,"spawnstill");
 		goto spawnwander;
 	spawnstill:
-		#### A 0 A_Look();
+		#### A 0 A_HDLook();
 		#### A 0 A_Recoil(random(-1,1)*0.4);
 		#### CD 5 A_SetAngle(angle+random(-4,4));
 		#### A 0{
-			A_Look();
-			if(!random(0,127))A_StartSound(activesound,CHAN_VOICE);
+			A_HDLook();
+			if(!random(0,127))A_Vocalize(activesound);
 		}
 		#### AB 5 A_SetAngle(angle+random(-4,4));
 		#### B 1 A_SetTics(random(10,40));
@@ -241,7 +246,7 @@ class ZombieStormtrooper:HDMobMan{
 	spawnwander:
 		#### CDAB 5{hdmobai.wander(self,false);}
 		#### A 0{
-			if(!random(0,127))A_StartSound(activesound,CHAN_VOICE);
+			if(!random(0,127))A_Vocalize(activesound);
 		}
 		#### A 0 A_Jump(64,"spawn2");
 		loop;
@@ -348,7 +353,7 @@ class ZombieStormtrooper:HDMobMan{
 		//fallthrough to postshot
 	postshot:
 		#### E 5{
-			if(!random(0,127))A_StartSound(activesound,CHAN_VOICE);
+			if(!random(0,127))A_Vocalize(activesound);
 			if(mag<1){
 				setstatelabel("reload");
 				return;
@@ -374,7 +379,7 @@ class ZombieStormtrooper:HDMobMan{
 		loop;
 
 	frag:
-		---- A 10 A_StartSound(seesound,CHAN_VOICE);
+		---- A 10 A_Vocalize(seesound);
 		---- A 20{
 			A_StartSound("weapons/pocket",CHAN_WEAPON);
 			A_FaceTarget(0,0);
@@ -390,7 +395,7 @@ class ZombieStormtrooper:HDMobMan{
 	jammed:
 		#### E 8;
 		#### E 0 A_Jump(128,"see");
-		#### E 4 A_StartSound(random(0,2)?seesound:painsound,CHAN_VOICE);
+		#### E 4 A_Vocalize(random(0,2)?seesound:painsound);
 		---- A 0 setstatelabel("see");
 
 	ohforfuckssake:
@@ -478,7 +483,7 @@ class ZombieStormtrooper:HDMobMan{
 		---- A 0 setstatelabel("see");
 	pain:
 		#### G 2;
-		#### G 3 A_Pain();
+		#### G 3 A_Vocalize(painsound);
 		#### G 0{
 			A_ShoutAlert(0.1,SAF_SILENT);
 			if(target&&distance3d(target)<100)setstatelabel("see");
@@ -489,7 +494,7 @@ class ZombieStormtrooper:HDMobMan{
 		---- A 0 setstatelabel("see");
 	death:
 		#### H 5;
-		#### I 5 A_Scream();
+		#### I 5 A_Vocalize(deathsound);
 		#### JK 5;
 	dead:
 		#### K 3 canraise{if(abs(vel.z)<2.)frame++;}
