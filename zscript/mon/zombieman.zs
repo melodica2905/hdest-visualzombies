@@ -18,7 +18,7 @@ class HDMobMan:HDMobBase{
 	}
 	override void postbeginplay(){
 		super.postbeginplay();
-		resize(0.95,1.05);
+		resize(0.9,1.1);
 		voicepitch=frandom(0.9,1.2);
 	}
 	//give armour
