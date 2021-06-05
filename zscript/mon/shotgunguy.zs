@@ -19,7 +19,7 @@ class UndeadJackbootman:HideousShotgunGuy{default{
 		//$Sprite "PLAYF1"
 		accuracy 3;
 }}
-class HideousShotgunGuy:HDMobMan replaces ShotgunGuy{
+class HideousShotgunGuy:HDHumanoid replaces ShotgunGuy{
 	default{
 		//$Category "Monsters/Hideous Destructor"
 		//$Title "Shotgun Guy"

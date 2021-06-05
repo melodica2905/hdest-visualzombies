@@ -1,69 +1,4 @@
 // ------------------------------------------------------------
-// Humanoid template
-// ------------------------------------------------------------
-class HDMobMan:HDMobBase{
-	default{
-		gibhealth 140;
-		health 100;
-		height 54;
-		radius 12;
-		deathheight 12;
-		mass 120;
-		speed 10;
-		+hdmobbase.smallhead
-		+hdmobbase.biped
-		+hdmobbase.chasealert
-		hdmobbase.downedframe 11;
-		tag "zombie";
-	}
-	override void postbeginplay(){
-		super.postbeginplay();
-		resize(0.9,1.1);
-		voicepitch=frandom(0.9,1.2);
-	}
-	//give armour
-	hdarmourworn givearmour(double chance=1.,double megachance=0.,double minimum=0.){
-		a_takeinventory("hdarmourworn");
-		if(frandom(0.,1.)>chance)return null;
-		let arw=hdarmourworn(giveinventorytype("hdarmourworn"));
-		int maxdurability;
-			if(frandom(0.,1.)<megachance){
-			arw.mega=true;
-			maxdurability=HDCONST_BATTLEARMOUR;
-		}else maxdurability=HDCONST_GARRISONARMOUR;
-		arw.durability=int(max(1,frandom(min(1.,minimum),1.)*maxdurability));
-		return arw;
-	}
-	states{
-	falldown:
-		#### H 5;
-		#### I 5 A_Vocalize(deathsound);
-		#### JJKKK 2 A_SetSize(-1,max(deathheight,height-10));
-		#### L 0 A_SetSize(-1,deathheight);
-		#### L 10 A_KnockedDown();
-		wait;
-	standup:
-		#### K 6;
-		#### J 0 A_Jump(160,2);
-		#### J 0 A_Vocalize(seesound);
-		#### JI 4 A_Recoil(-0.3);
-		#### HE 6;
-		#### A 0 A_Jump(256,"see");
-	}
-}
-class shootest:HDMobMan{
-	default{+nodamage +nopain health int.MAX;}
-	states{
-	spawn:
-		POSS A -1;
-	}
-}
-class shoothicc:shootest{
-	default{radius 48;}
-}
-
-
-// ------------------------------------------------------------
 // Former Human
 // ------------------------------------------------------------
 
@@ -73,7 +8,7 @@ class shoothicc:shootest{
 	1=ZM66 regular; 2=ZM66 marksman; 3=SMG
 */
 
-class ZombieStormtrooper:HDMobMan{
+class ZombieStormtrooper:HDHumanoid{
 	default{
 		//$Category "Monsters/Hideous Destructor"
 		//$Title "Zombieman"
