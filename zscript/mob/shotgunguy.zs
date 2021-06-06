@@ -262,7 +262,7 @@ class HideousShotgunGuy:HDHumanoid replaces ShotgunGuy{
 		#### E 1 A_SetTics(random(4,10)); //when they just start to aim,not for followup shots!
 		#### A 0 A_CheckLOF("see",
 			CLOFF_JUMPNONHOSTILE|CLOFF_SKIPTARGET|
-			CLOFF_JUMPOBJECT|CLOFF_MUSTBESOLID|CLOFF_SKIPENEMY,
+			CLOFF_MUSTBESOLID|CLOFF_SKIPENEMY,
 			0,0,0,0,44,0
 		);
 	missile2:
@@ -460,7 +460,7 @@ class HideousShotgunGuy:HDHumanoid replaces ShotgunGuy{
 			hdmobai.wander(self,true);
 			if(gunspent==999)return;
 
-			A_StartSound("weapons/rifleload",8);
+			A_StartSound("weapons/rifleunload",8);
 			if(!gunloaded)A_SpawnProjectile("HD4mmMagEmpty",38,0,random(90,120));
 			else{
 				HDMagAmmo.SpawnMag(self,"HD4mMag",gunloaded);

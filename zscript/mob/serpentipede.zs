@@ -1,6 +1,6 @@
-// ############################################################
+// ------------------------------------------------------------
 // Imp
-// ############################################################
+// ------------------------------------------------------------
 
 //old non-recycling version still used for some other actors
 class ImpBallTail:BlackParticleFountain{
@@ -17,17 +17,24 @@ class ImpBallTail:BlackParticleFountain{
 		stop;
 	}
 }
-class ReverseImpBallTail:RedParticleFountain{
+class ReverseImpBallTail:IdleDummy{
 	default{
 		+nointeraction +forcexybillboard -invisible
 		renderstyle "add";
 		scale 0.6;alpha 0;
+	}
+	override void Tick(){
+		A_SpawnParticle("99 44 11",0,random(30,40),frandom(1.2,2.1),0,frandom(-4,4),frandom(-4,4),frandom(0,2),frandom(-1,1),frandom(-1,1),frandom(0.9,1.3));
+		super.Tick();
 	}
 	states{
 		spawn:
 			BAL1 EEDC 2 bright A_FadeIn(0.2);
 		death:
 			BAL1 BAB 2 bright A_FadeIn(0.2);
+			BAL1 A 0{
+				if(target&&target.health<1)A_Immolate(target,target.target,random(20,50));
+			}
 			stop;
 	}
 }
@@ -53,13 +60,14 @@ class HDImpBall:HDFireball{
 		missiletype "HDImpBallTail";
 		decal "BrontoScorch";
 		speed 12;
-		damagetype "electro";
+		damagetype "electrical";
 		gravity 0;
 	}
 	double initangleto;
 	double inittangle;
 	double inittz;
 	vector3 initpos;
+	vector3 initvel;
 	virtual void A_HDIBFly(){
 		roll+=10;
 		if(!A_FBSeek()){
@@ -90,9 +98,17 @@ class HDImpBall:HDFireball{
 			tracer.damagemobj(self,target,max(1,dmg>>2),"hot");
 		}
 	}
+	override void postbeginplay(){
+		super.postbeginplay();
+		initvel=vel.unit()*0.3;
+	}
+	void A_FBTailAccelerate(){
+		A_FBTail();
+		vel+=initvel;
+	}
 	states{
 	spawn:
-		BAL1 ABAB 3 A_FBTail();
+		BAL1 ABABABABAB 2 A_FBTailAccelerate();
 	spawn2:
 		BAL1 AB 3 A_HDIBFly();
 		loop;
@@ -108,7 +124,7 @@ class HDImpBall:HDFireball{
 				)blockingmobj.givebody(random(1,10));
 				else{
 					tracer=blockingmobj;
-					blockingmobj.damagemobj(self,target,random(6,18),"Electro");
+					blockingmobj.damagemobj(self,target,random(6,18),"electrical");
 				}
 			}
 			if(tracer){
@@ -145,7 +161,7 @@ class Serpentipede:HDMobBase{
 		//$Category "Monsters/Hideous Destructor"
 		//$Title "Imp Fighter"
 		//$Sprite "TROOA1"
-		
+
 		+hdmobbase.chasealert
 
 		mass 100;
@@ -268,7 +284,7 @@ class Serpentipede:HDMobBase{
 			pitch+=leadaim1.y;
 		}
 		#### F 4;
-		#### G 8 A_SpawnProjectile("HDImpBall",34,0,0,CMF_AIMDIRECTION,pitch);
+		#### G 8 A_SpawnProjectile("HDImpBall",34,0,0,CMF_AIMDIRECTION,pitch-frandom(0,0.1));
 		#### F 0 A_ChangeVelocity(frandom(-1,1),frandom(-3,3),0,CVF_RELATIVE);
 		#### F 6;
 		#### A 0 A_JumpIfTargetInsideMeleeRange("melee");
@@ -287,7 +303,7 @@ class Serpentipede:HDMobBase{
 		#### E 2 A_FaceTarget(12,24);
 	spam2:
 		#### F 2;
-		#### G 6 A_SpawnProjectile("HDImpBall",35,0,frandom(-5,7),CMF_AIMDIRECTION,pitch+random(-4,4));
+		#### G 6 A_SpawnProjectile("HDImpBall",35,0,frandom(-3,4),CMF_AIMDIRECTION,pitch+frandom(-2,1.8));
 		#### F 4;
 		#### F 0 A_JumpIfTargetInLOS("spam3");
 		#### F 0 A_Jump(256,"coverfire");
@@ -314,9 +330,9 @@ class Serpentipede:HDMobBase{
 		#### EEEEE 2 A_SpawnItemEx("ReverseImpBallTail",4,24,random(31,33),1,0,0,0,160);
 		#### E 2;
 		#### F 2;
-		#### G 0 A_SpawnProjectile("HDImpBall",36,0,(frandom(-2,10)),CMF_AIMDIRECTION,pitch+frandom(-4,4));
-		#### G 0 A_SpawnProjectile("HDImpBall",36,0,(frandom(-4,4)),CMF_AIMDIRECTION,pitch+frandom(-4,4));
-		#### G 0 A_SpawnProjectile("HDImpBall",36,0,(frandom(-2,-10)),CMF_AIMDIRECTION,pitch+frandom(-4,4));
+		#### G 0 A_SpawnProjectile("HDImpBall",36,0,(frandom(-2,10)),CMF_AIMDIRECTION,pitch+frandom(-4,3.6));
+		#### G 0 A_SpawnProjectile("HDImpBall",36,0,(frandom(-4,4)),CMF_AIMDIRECTION,pitch+frandom(-4,3.6));
+		#### G 0 A_SpawnProjectile("HDImpBall",36,0,(frandom(-2,-10)),CMF_AIMDIRECTION,pitch+frandom(-4,3.6));
 		#### GGFE 5 A_SetTics(random(4,6));
 		#### E 0 A_JumpIf(!hdmobai.TryShoot(self,32,256,10,10),"see");
 		#### A 0 A_Jump(256,"spam");
@@ -327,8 +343,10 @@ class Serpentipede:HDMobBase{
 		#### F 4;
 		#### A 0 setstatelabel("see");
 	pain:
-		#### A 0 A_GiveInventory("HDFireEnder",3);
-		#### H 3 {bNODROPOFF=true;}
+		#### H 3 {
+			A_GiveInventory("HDFireEnder",3);
+			bNODROPOFF=true;
+		}
 		#### H 3 A_Vocalize(painsound);
 		#### A 0 A_ShoutAlert(0.4,SAF_SILENT);
 		#### A 2 A_FaceTarget();
@@ -376,7 +394,7 @@ class Serpentipede:HDMobBase{
 		#### A 0 A_Jump(256,"see");
 	falldown:
 		#### H 5;
-		#### I 5 A_Scream();
+		#### I 5 A_Vocalize(deathsound);
 		#### JJKKL 2 A_SetSize(-1,max(deathheight,height-10));
 		#### L 2 A_SetSize(-1,deathheight);
 		#### M 10 A_KnockedDown();
@@ -392,9 +410,9 @@ class Serpentipede:HDMobBase{
 }
 
 
-// ############################################################
+// ------------------------------------------------------------
 // Healer Imp
-// ############################################################
+// ------------------------------------------------------------
 class tempshieldimp:tempshield{
 	default{
 		+noblooddecals
@@ -413,7 +431,7 @@ class ShieldImpBall:DoomImpBall{
 		height 20;
 		radius 20;
 		speed 8;
-		damagetype "Electro";
+		damagetype "electrical";
 		damage 5;
 		bloodtype "ShieldNeverBlood";
 		health 1;
@@ -568,9 +586,9 @@ class Regentipede:Serpentipede{
 }
 
 
-// ############################################################
+// ------------------------------------------------------------
 // Mage Imp
-// ############################################################
+// ------------------------------------------------------------
 class Ardentipede:Serpentipede{
 	default{
 		//$Category "Monsters/Hideous Destructor"
@@ -676,9 +694,11 @@ class Ardentipede:Serpentipede{
 		#### H 8;
 		goto missile1;
 	pain:
-		#### A 0 A_GiveInventory("HDFireEnder",3);
-		#### H 0 A_Gravity();
-		#### H 3 {bNODROPOFF=true;}
+		#### H 3 {
+			A_GiveInventory("HDFireEnder",3);
+			A_Gravity();
+			bNODROPOFF=true;
+		}
 		#### H 3 A_Vocalize(painsound);
 		#### A 2 A_FaceTarget();
 		#### BCD 2 A_FastChase();
@@ -772,9 +792,9 @@ class ArdentipedeBallTail2:ArdentipedeBallTail{
 }
 
 
-// ############################################################
+// ------------------------------------------------------------
 // Imp Spawner
-// ############################################################
+// ------------------------------------------------------------
 class ImpSpawner:RandomSpawner replaces DoomImp{
 	default{
 		+ismonster

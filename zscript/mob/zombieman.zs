@@ -207,7 +207,7 @@ class ZombieStormtrooper:HDHumanoid{
 		#### A 0 A_JumpIfTargetInLOS("missile2");
 		#### A 0 A_CheckLOF("see",
 			CLOFF_JUMPNONHOSTILE|CLOFF_SKIPTARGET|
-			CLOFF_JUMPOBJECT|CLOFF_MUSTBESOLID|
+			CLOFF_MUSTBESOLID|
 			CLOFF_SKIPENEMY,
 			0,0,0,0,44,0
 		);
@@ -342,7 +342,7 @@ class ZombieStormtrooper:HDHumanoid{
 		}
 		#### AA 1{hdmobai.chase(self,"melee",null);}
 		#### A 0{
-			A_StartSound("weapons/rifleload");
+			A_StartSound("weapons/rifleunload");
 			name emptymag="HD4mMag";
 			if(firemode==-2)emptymag="HD9mMag30";
 			HDMagAmmo.SpawnMag(self,emptymag,0);
