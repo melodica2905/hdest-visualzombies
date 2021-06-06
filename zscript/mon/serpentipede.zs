@@ -87,7 +87,7 @@ class HDImpBall:HDFireball{
 		setorigin((pos+(tracer.pos-initpos))*0.5,true);
 		if(dmg){
 			tracer.A_GiveInventory("Heat",dmg);
-			tracer.damagemobj(self,target,dmg/10,"Thermal");
+			tracer.damagemobj(self,target,max(1,dmg>>2),"hot");
 		}
 	}
 	states{
@@ -158,7 +158,7 @@ class Serpentipede:HDMobBase{
 		hdmobbase.downedframe 12;
 		tag "$CC_IMP";
 
-		damagefactor "Thermal",0.66;
+		damagefactor "hot",0.66;
 		Health 100;
 		gibhealth 100;
 		Radius 14;
