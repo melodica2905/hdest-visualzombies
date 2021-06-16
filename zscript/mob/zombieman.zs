@@ -207,7 +207,7 @@ class ZombieStormtrooper:HDHumanoid{
 		#### A 0 A_JumpIfTargetInLOS("missile2");
 		#### A 0 A_CheckLOF("see",
 			CLOFF_JUMPNONHOSTILE|CLOFF_SKIPTARGET|
-			CLOFF_JUMPOBJECT|CLOFF_MUSTBESOLID|
+			CLOFF_MUSTBESOLID|
 			CLOFF_SKIPENEMY,
 			0,0,0,0,44,0
 		);
@@ -298,9 +298,9 @@ class ZombieStormtrooper:HDHumanoid{
 		}
 		#### E 3;
 		#### E 0 A_JumpIfTargetInLOS(1);
-		goto coverfire;//even if not in los,occasionally keep shooting anyway
+		goto coverfire;  //even if not in los,occasionally keep shooting anyway
 		#### E 3 A_FaceTarget(10,10);
-		#### E 0 A_Jump(30,"see");//even if in los,occasionally stop shooting anyway
+		#### E 0 A_Jump(30,"see");  //even if in los,occasionally stop shooting anyway
 		goto coverfire;
 
 	coverfire:
@@ -342,7 +342,7 @@ class ZombieStormtrooper:HDHumanoid{
 		}
 		#### AA 1{hdmobai.chase(self,"melee",null);}
 		#### A 0{
-			A_StartSound("weapons/rifleload");
+			A_StartSound("weapons/rifleunload");
 			name emptymag="HD4mMag";
 			if(firemode==-2)emptymag="HD9mMag30";
 			HDMagAmmo.SpawnMag(self,emptymag,0);
@@ -360,9 +360,7 @@ class ZombieStormtrooper:HDHumanoid{
 	see:
 		#### A 0{if(firemode>=0)firemode=random(0,2);}
 	see2:
-		#### A 0{
-			if(mag<1)setstatelabel("reload");
-		}
+		#### A 0 A_JumpIf(!jammed&&mag<1,"reload");
 		#### AABBCCDD 2 {hdmobai.chase(self);}
 		#### A 0{
 			spread=2;
