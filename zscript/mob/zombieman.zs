@@ -34,7 +34,6 @@ class ZombieStormtrooper:HDHumanoid{
 	int user_weapon;
 	int mag;
 	int firemode; //-2 SMG; -1 semi only; 0 semi; 1 auto; 2+ burst
-	bool jammed;
 	override void postbeginplay(){
 		super.postbeginplay();
 		if(user_weapon)accuracy=user_weapon;
@@ -336,6 +335,7 @@ class ZombieStormtrooper:HDHumanoid{
 	ohforfuckssake:
 		#### E 8;
 	reload:
+		---- A 0 A_JumpIf(mag<0,"unloadedreload");
 		---- A 4{
 			A_StartSound("weapons/rifleclick2");
 			bfrightened=true;
@@ -346,7 +346,9 @@ class ZombieStormtrooper:HDHumanoid{
 			name emptymag="HD4mMag";
 			if(firemode==-2)emptymag="HD9mMag30";
 			HDMagAmmo.SpawnMag(self,emptymag,0);
+			mag=-1;
 		}
+	unloadedreload:
 		#### BCD 2 {hdmobai.chase(self,"melee",null);}
 		#### E 12 A_StartSound("weapons/pocket",8);
 		#### E 8 A_StartSound("weapons/rifleload",9);
@@ -393,7 +395,7 @@ class ZombieStormtrooper:HDHumanoid{
 		#### E 0{spread=4;}
 		#### ABCD 3{hdmobai.chase(self);}
 		---- A 0 setstatelabel("see");
-	melee:
+//	melee:
 		#### C 8 A_FaceTarget();
 		#### D 4;
 		#### E 4{
