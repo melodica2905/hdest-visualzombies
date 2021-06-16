@@ -43,7 +43,6 @@ class HideousShotgunGuy:HDHumanoid replaces ShotgunGuy{
 		obituary "%o was shot up by the Tyrant's jack-booted thugs.";
 		hitobituary "%o was beaten up by the Tyrant's jack-booted thugs.";
 	}
-	bool jammed;
 	bool semi;
 	int gunloaded;
 	int gunspent;
@@ -542,7 +541,7 @@ class HideousShotgunGuy:HDHumanoid replaces ShotgunGuy{
 		#### EEE 1 A_Chase("melee","missile",CHF_DONTMOVE);
 		---- A 0 setstatelabel("see");
 
-	melee:
+//	melee:
 		#### C 6 A_FaceTarget();
 		#### D 4;
 		#### E 4{

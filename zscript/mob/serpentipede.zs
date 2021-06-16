@@ -694,9 +694,11 @@ class Ardentipede:Serpentipede{
 		#### H 8;
 		goto missile1;
 	pain:
-		#### A 0 A_GiveInventory("HDFireEnder",3);
-		#### H 0 A_Gravity();
-		#### H 3 {bNODROPOFF=true;}
+		#### H 3 {
+			A_GiveInventory("HDFireEnder",3);
+			A_Gravity();
+			bNODROPOFF=true;
+		}
 		#### H 3 A_Vocalize(painsound);
 		#### A 2 A_FaceTarget();
 		#### BCD 2 A_FastChase();
@@ -790,9 +792,9 @@ class ArdentipedeBallTail2:ArdentipedeBallTail{
 }
 
 
-// ############################################################
+// ------------------------------------------------------------
 // Imp Spawner
-// ############################################################
+// ------------------------------------------------------------
 class ImpSpawner:RandomSpawner replaces DoomImp{
 	default{
 		+ismonster
