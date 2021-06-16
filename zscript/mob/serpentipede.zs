@@ -1,6 +1,6 @@
-// ############################################################
+// ------------------------------------------------------------
 // Imp
-// ############################################################
+// ------------------------------------------------------------
 
 //old non-recycling version still used for some other actors
 class ImpBallTail:BlackParticleFountain{
@@ -161,7 +161,7 @@ class Serpentipede:HDMobBase{
 		//$Category "Monsters/Hideous Destructor"
 		//$Title "Imp Fighter"
 		//$Sprite "TROOA1"
-		
+
 		+hdmobbase.chasealert
 
 		mass 100;
@@ -343,8 +343,10 @@ class Serpentipede:HDMobBase{
 		#### F 4;
 		#### A 0 setstatelabel("see");
 	pain:
-		#### A 0 A_GiveInventory("HDFireEnder",3);
-		#### H 3 {bNODROPOFF=true;}
+		#### H 3 {
+			A_GiveInventory("HDFireEnder",3);
+			bNODROPOFF=true;
+		}
 		#### H 3 A_Vocalize(painsound);
 		#### A 0 A_ShoutAlert(0.4,SAF_SILENT);
 		#### A 2 A_FaceTarget();
@@ -392,7 +394,7 @@ class Serpentipede:HDMobBase{
 		#### A 0 A_Jump(256,"see");
 	falldown:
 		#### H 5;
-		#### I 5 A_Scream();
+		#### I 5 A_Vocalize(deathsound);
 		#### JJKKL 2 A_SetSize(-1,max(deathheight,height-10));
 		#### L 2 A_SetSize(-1,deathheight);
 		#### M 10 A_KnockedDown();
@@ -408,9 +410,9 @@ class Serpentipede:HDMobBase{
 }
 
 
-// ############################################################
+// ------------------------------------------------------------
 // Healer Imp
-// ############################################################
+// ------------------------------------------------------------
 class tempshieldimp:tempshield{
 	default{
 		+noblooddecals
@@ -584,9 +586,9 @@ class Regentipede:Serpentipede{
 }
 
 
-// ############################################################
+// ------------------------------------------------------------
 // Mage Imp
-// ############################################################
+// ------------------------------------------------------------
 class Ardentipede:Serpentipede{
 	default{
 		//$Category "Monsters/Hideous Destructor"
